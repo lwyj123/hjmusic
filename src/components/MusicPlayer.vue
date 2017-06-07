@@ -8,11 +8,17 @@
                 <button id="playBar-stopBtn" v-else @click="stop()"></button>
                 <button id="playBar-nextBtn"></button>
             </li>
-            <li class="playBar_m">
+            <li class="hj-playBar-main">
                 <h1 class="songName">{{songInfo.name}}</h1>
-                <p class="singerName">{{songInfo.singer}}</p>
+                <div class="progress">
+                    <div class="start-time">1:00</div>
+                    <div @click="changeTime($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)" ref="progressBar" class="progress-bar">
+                        <div style="width: 10%" class="now"></div>
+                    </div>
+                    <div class="end-time">2:00</div>
+                </div>
             </li>
-            <li class="playBar_r">
+            <li class="hj-playBar-funcbtns">
                 
             </li>
         </ul>
@@ -91,33 +97,32 @@
                 background-position: 0 -60px;
             }
         }
+        li.hj-playBar-main {
+            flex: 1;
+            .progress {
+                display: flex;
+                justify-content: center;
+                .progress-bar {
+                    position: relative;
+                    width: 50%;
+                    height: 5px;
+                    display: inline-block;
+                    background-color: hsla(0,0%,100%,.5);
+                    vertical-align: 2px;
+                    border-radius: 3px;
+                    cursor: pointer;
+                }
+                .now {
+                    position: absolute;
+                    left: 0;
+                    display: inline-block;
+                    max-width: 100%;
+                    height: 5px;
+                    background-color: #31c27c;  
+                }
+            }
+        }
     }
 }
-    .playBar_box{
-        display: flex;
-        align-items: center;
-        height: 14vh;
-        overflow: hidden;
-        padding-left: 1.5rem;
-    }
-    .playBar_l{
-        height:16vw;
-        width: 16vw;
-        border: 2px #ccc solid;
-        max-width: 90px;
-        max-height: 90px;
-    }
-    .playBar_l img{
-        width: 15vw;
-        max-width: 86px;
-        max-height: 86px;
-    }
-    .playBar_m{
-        flex: 1;
-        padding-left: 1.5rem;
-    }
-    .playBar_r button{
-        font-size: 3rem;
-        margin-right: 1.2rem;
-    }
+
 </style>
