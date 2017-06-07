@@ -99,17 +99,23 @@
         }
         li.hj-playBar-main {
             flex: 1;
+            h1 {
+                font-family: "Helvetica Neue","Hiragino Sans GB","Microsoft Yahei",Helvetica,Arial,sans-serif;
+            }
             .progress {
                 display: flex;
                 justify-content: center;
+                align-items: center;
+
+                    color: #fff;
+                    opacity: .3;
                 .progress-bar {
                     position: relative;
                     width: 50%;
                     height: 5px;
-                    display: inline-block;
                     background-color: hsla(0,0%,100%,.5);
-                    vertical-align: 2px;
                     border-radius: 3px;
+                    margin: 0 20px;
                     cursor: pointer;
                 }
                 .now {
