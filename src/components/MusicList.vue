@@ -3,7 +3,7 @@
             enter-active-class="animated fadeInUp"
             leave-active-class="animated fadeOutDown"
     >
-    <div class="musicList_box" v-show="getListState">
+    <div class="musicList_box" v-show="showList">
         <h1>播放列表（{{getList?getList.length:0}}首）</h1>
     <ul class="musicList">
         <li v-for="(val,index) in getList" :class="{playing:getMusicPlace==index}">
@@ -21,7 +21,10 @@
 <script>
     import {mapActions,mapGetters} from 'vuex'
     export default{
-        computed:mapGetters(['getList','getListState','getMusicPlace']),//actions.js里有注释功能
+        computed: {
+            ...mapGetters(['showList']),
+
+        },
         methods:mapActions(['closeListState','selectMusic','delMusic'])//getters.js里有注释功能
     }
 </script>

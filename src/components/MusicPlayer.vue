@@ -19,7 +19,7 @@
                 </div>
             </li>
             <li class="hj-playBar-funcbtns">
-                
+                <button id="playBar-showList" @click="toggleMusicList()">&#xe613;</button>                
             </li>
         </ul>
     </div>
@@ -40,6 +40,7 @@
             }
         },
         methods: {
+            ...mapActions(['toggleMusicList']),
             play() {
                 this.playbarState.isPlaying = true
                 console.log("now playing")

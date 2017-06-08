@@ -5,6 +5,8 @@
       <router-view></router-view>
     </transition>
     <music-player></music-player>
+    <!--音频播放标签-->
+    <audio src="" ref="audio" autoplay="autoplay" @ended="loopPlayback" @timeupdate="getcurrentTime" @canplay="getDuration"></audio>
   </div>
 </template>
 
