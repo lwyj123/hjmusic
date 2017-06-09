@@ -7,7 +7,9 @@ import { TOGGLEMUSICLIST } from '@/vuex/mutation-types'
 import { SETCURRENTTIME } from '@/vuex/mutation-types'
 
 const state = {
-    musicList: [],
+    musicList: [{
+        
+    }],
     musicNow: {},
     isPlaying:false,
     currentTime:0,//音乐播放进度
@@ -16,7 +18,8 @@ const state = {
 }
 const getters = {
     getUserInfo: state => state.userInfo,
-    showList: state => state.showList,
+    isShowMusicList: state => state.showList,
+    getMusicList: state => state.musicList,
     currentTime: state => state.currentTime,
     duration: state => state.duration,
 }

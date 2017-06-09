@@ -59,20 +59,25 @@
 <style lang="scss" scoped>
 .hj-player {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     position: fixed;
     bottom: 0;
     padding: 0;
     margin: auto;
-    background-color: #1d1d1d;
+    background-color: transparent;
     width: 100%;
     box-sizing: border-box;
     ul.hj-playbar {
         display: flex;
-        padding: 10px 0;
+        box-sizing: border-box;
+        padding: 10px 50px;
         align-items: center;
-        width: 980px;
+        width: 100%;
         margin: auto;
+        background-color: #1d1d1d;
         li.hj-playBar-playbtns {
+            flex:0 0 100px;
             button {
                 width: 30px;
                 height: 30px;
@@ -128,6 +133,9 @@
                     background-color: #31c27c;  
                 }
             }
+        }
+        li.hj-playBar-funcbtns {
+            flex: 0 0 100px;
         }
     }
 }
