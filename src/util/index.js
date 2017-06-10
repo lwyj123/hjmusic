@@ -40,8 +40,14 @@ var storeWithExpiration = {
     }
 }
 
+var secondsToFormat = function(seconds) {
+    let minutes_part = parseInt(seconds/60)
+    let seconds_part = parseInt(seconds%60)
+    return (minutes_part<10 ? `0${minutes_part}` : `${minutes_part}`) + ":" + (seconds_part<10 ? `0${seconds_part}` : `${seconds_part}`)
+}
 
 export default {
     getBrowserInfo,
     storeWithExpiration,
+    secondsToFormat,
 }

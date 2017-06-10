@@ -6,12 +6,13 @@
     </transition>
     <music-player></music-player>
     <!--音频播放标签-->
-    <audio src="" ref="audio" autoplay="autoplay" @ended="loopPlayback" @timeupdate="getcurrentTime" @canplay="getDuration"></audio>
+    <audio src="" ref="audio" autoplay="autoplay" @ended="loopPlayback" @timeupdate="syncCurrentTime" @canplay="getDuration"></audio>
   </div>
 </template>
 
 <script>
 import MusicPlayer from '@/components/MusicPlayer'
+import {mapActions,mapGetters} from 'vuex'//使用状态管理里的mapActions来传递方法，mapGetters来展示数据
 export default {
   name: 'app',
   components:{
@@ -19,33 +20,21 @@ export default {
   },
   data() {
     return {
-      dialogTableVisible: false,
-      gridData: [{
-        date: '2016-05-02',
-        bookname: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        bookname: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-01',
-        bookname: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-03',
-        bookname: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }],
+      
     }
   },
   methods: {
+    ...mapActions([
+        'setPlayerDOM',
+        'syncCurrentTime',//循环播放（自动下一曲）
+    ]),
     change() {
       this.dialogTableVisible = true
       console.log("fuck")
     }
   },
   mounted() {
+    this.$store.dispatch('setPlayerDOM',this.$refs.audio);
   },
 
 }

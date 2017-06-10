@@ -6,16 +6,16 @@
                 <button id="playBar-prevBtn"></button>
                 <button id="playBar-playBtn" v-if="!playbarState.isPlaying" @click="play()"></button>
                 <button id="playBar-stopBtn" v-else @click="stop()"></button>
-                <button id="playBar-nextBtn"></button>
+                <button id="playBar-nextBtn" @click="next()"></button>
             </li>
             <li class="hj-playBar-main">
-                <h1 class="songName">{{songInfo.name}}</h1>
+                <h1 class="songName">{{getCurrentMusic.name}}</h1>
                 <div class="progress">
-                    <div class="start-time">1:00</div>
+                    <div class="start-time">{{ currentTimeFormat }}</div>
                     <div @click="changeTime($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)" ref="progressBar" class="progress-bar">
-                        <div style="width: 10%" class="now"></div>
+                        <div :style="{width: (currentSecond / getPlayerDOM.duration).toFixed(3)*100 + '%'}" class="now"></div>
                     </div>
-                    <div class="end-time">2:00</div>
+                    <div class="end-time">{{ durationTimeFormat }}</div>
                 </div>
             </li>
             <li class="hj-playBar-funcbtns">
@@ -36,24 +36,62 @@
                 songInfo: {
                     name: "fuck",
                     singer: "fuckyou"
-                }
+                },
+                musicList: [{
+                    name: "fuck",
+                    src: "http://data.5sing.kgimg.com/G104/M08/04/11/SJQEAFk2UD2AUCKVAIERS2toLx8306.mp3",
+                    duration: 200.12
+                }, {
+                    name: "miaomiao",
+                    src: "http://data.5sing.kgimg.com/G104/M09/1C/1D/qA0DAFk1fVGAGWkMAOMuQpygo8g155.mp3",
+                    duration: 123
+                }]
             }
+        },
+        computed: {
+            ...mapGetters([
+                'getCurrentMusic',
+                'getPlayerDOM', 
+                'currentSecond', 
+                'currentTimeFormat', 
+                'durationTimeFormat',
+            ]),
         },
         components:{
             MusicList
         },
         methods: {
-            ...mapActions(['toggleMusicList']),
+            ...mapActions(['toggleMusicList', 'initSong','playSong', 'pauseSong']),
             play() {
-                this.playbarState.isPlaying = true
-                console.log("now playing")
+                console.log(Object.getOwnPropertyNames(this.getCurrentMusic))
+                if(Object.getOwnPropertyNames(this.getCurrentMusic).length == 1) {
+                    this.playbarState.isPlaying = true
+                    this.$store.dispatch('initSong', this.musicList[0]);
+                    this.$store.dispatch('playSong');
+                } else {
+                    this.playbarState.isPlaying = true
+                    this.$store.dispatch('playSong');
+                    console.log("now playing")
+                }
             },
             stop() {
                 this.playbarState.isPlaying = false
+                this.$store.dispatch('pauseSong');
                 console.log("now stop")
-            }
+            },
+            next() {
+                this.playbarState.isPlaying = true
+                this.$store.dispatch('initSong', this.musicList[1]);
+                this.$store.dispatch('playSong');                
+            },
+            changeTime(event) {
+                let progressBar = this.$refs.progressBar;
+                let coordStart = progressBar.getBoundingClientRect().left;
+                let coordEnd = event.pageX;
+                this.getPlayerDOM.currentTime = (coordEnd - coordStart) / progressBar.offsetWidth * this.getPlayerDOM.duration;
+                this.$store.dispatch('playSong'); 
+            },
         },
-        computed:mapGetters(['playBtnClass','currentTime','duration','songImg','songInfo']),
     }
 </script>
 <style lang="scss" scoped>
