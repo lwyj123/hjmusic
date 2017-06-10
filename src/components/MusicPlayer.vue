@@ -39,6 +39,9 @@
                 }
             }
         },
+        components:{
+            MusicList
+        },
         methods: {
             ...mapActions(['toggleMusicList']),
             play() {
@@ -51,9 +54,6 @@
             }
         },
         computed:mapGetters(['playBtnClass','currentTime','duration','songImg','songInfo']),
-        components:{
-            MusicList
-        }
     }
 </script>
 <style lang="scss" scoped>
