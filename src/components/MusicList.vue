@@ -17,7 +17,7 @@
         <div class="hj-playList-content">
             <div class="hj-playList-listc">
                 <ul class="hj-playList-list">
-                    <li v-for="(val,index) in getList" :class="{playing:getMusicPlace==index}">
+                    <li v-for="(val,index) in getMusicList" :class="{playing:getMusicPlace==index}">
                         <span>{{index+1}}.</span>
                         <b  @click.stop="selectMusic(index)">
                             {{val?val.name:你还没有添加列表}}
@@ -43,7 +43,8 @@
                 songInfo: {
                     name: "fuck",
                     singer: "fuckyou"
-                }
+                },
+                getMusicPlace: 0
             }
         },
         components:{

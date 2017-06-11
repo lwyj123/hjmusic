@@ -6,7 +6,7 @@
     </transition>
     <music-player></music-player>
     <!--音频播放标签-->
-    <audio src="" ref="audio" autoplay="autoplay" @ended="loopPlayback" @timeupdate="syncCurrentTime" @canplay="getDuration"></audio>
+    <audio src="" ref="audio" autoplay="autoplay" @ended="" @timeupdate="syncCurrentTime" @canplay=""></audio>
   </div>
 </template>
 

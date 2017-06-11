@@ -13,7 +13,7 @@
                 <div class="progress">
                     <div class="start-time">{{ currentTimeFormat }}</div>
                     <div @click="changeTime($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)" ref="progressBar" class="progress-bar">
-                        <div :style="{width: (currentSecond / getPlayerDOM.duration).toFixed(3)*100 + '%'}" class="now"></div>
+                        <div :style="{width: (currentSecond / durationSecond).toFixed(3)*100 + '%'}" class="now"></div>
                     </div>
                     <div class="end-time">{{ durationTimeFormat }}</div>
                 </div>
@@ -38,13 +38,54 @@
                     singer: "fuckyou"
                 },
                 musicList: [{
+                    id: '123',
                     name: "fuck",
+                    avatar_url: "",
+                    singer: {
+                        id: '1',
+                        name: 'adyden'
+                    },
+                    composer: {
+                        id: '3',
+                        name: 'fuck'
+                    },
+                    lyricist: {
+                        id: '3',
+                        name: 'fuck',
+                    },
+                    lyrics_url: "http://fuck.com",
+                    album: {
+                        id: '5',
+                        name: 'album test',
+                        avatar_url: "",
+                        songs: 12,
+                    },
                     src: "http://data.5sing.kgimg.com/G104/M08/04/11/SJQEAFk2UD2AUCKVAIERS2toLx8306.mp3",
-                    duration: 200.12
+                    published_at: "2009-01-17T20:14:40Z"
                 }, {
+                    id: '123',
                     name: "miaomiao",
+                    avatar_url: "",
+                    singer: {
+                        id: '1',
+                        name: 'adyden'
+                    },
+                    composer: {
+                        id: '3',
+                        name: 'fuck'
+                    },
+                    lyricist: {
+                        id: '3',
+                        name: 'fuck',
+                    },
+                    lyrics_url: "http://fuck.com",
+                    album: {
+                        id: '5',
+                        name: 'album test',
+                        avatar_url: "",
+                        songs: 12,
+                    },
                     src: "http://data.5sing.kgimg.com/G104/M09/1C/1D/qA0DAFk1fVGAGWkMAOMuQpygo8g155.mp3",
-                    duration: 123
                 }]
             }
         },
@@ -52,9 +93,12 @@
             ...mapGetters([
                 'getCurrentMusic',
                 'getPlayerDOM', 
+                'getMusicList',
                 'currentSecond', 
                 'currentTimeFormat', 
+                'durationSecond',
                 'durationTimeFormat',
+                'nextSong',
             ]),
         },
         components:{
@@ -63,10 +107,9 @@
         methods: {
             ...mapActions(['toggleMusicList', 'initSong','playSong', 'pauseSong']),
             play() {
-                console.log(Object.getOwnPropertyNames(this.getCurrentMusic))
                 if(Object.getOwnPropertyNames(this.getCurrentMusic).length == 1) {
                     this.playbarState.isPlaying = true
-                    this.$store.dispatch('initSong', this.musicList[0]);
+                    this.$store.dispatch('initSong', this.nextSong);
                     this.$store.dispatch('playSong');
                 } else {
                     this.playbarState.isPlaying = true
@@ -81,14 +124,14 @@
             },
             next() {
                 this.playbarState.isPlaying = true
-                this.$store.dispatch('initSong', this.musicList[1]);
+                this.$store.dispatch('initSong', this.nextSong);
                 this.$store.dispatch('playSong');                
             },
             changeTime(event) {
                 let progressBar = this.$refs.progressBar;
                 let coordStart = progressBar.getBoundingClientRect().left;
                 let coordEnd = event.pageX;
-                this.getPlayerDOM.currentTime = (coordEnd - coordStart) / progressBar.offsetWidth * this.getPlayerDOM.duration;
+                this.getPlayerDOM.currentTime = (coordEnd - coordStart) / progressBar.offsetWidth * this.durationSecond;
                 this.$store.dispatch('playSong'); 
             },
         },

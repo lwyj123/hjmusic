@@ -13,9 +13,9 @@ import Personal from '@/views/Personal'
 import Profile from '@/views/personal/Profile'
 import Settings from '@/views/personal/Settings'
 // My record
-import Myrecord from '@/views/Myrecord'
-import Current from '@/views/myrecord/Current'
-import History from '@/views/myrecord/History'
+import Mycollection from '@/views/Mycollection'
+import Singles from '@/views/mycollection/Singles'
+import History from '@/views/mycollection/History'
 
 import store from '../vuex/store'
 Vue.use(Router)
@@ -83,10 +83,10 @@ const router = new Router({
         },
       ]
     },{ 
-      path: '/myrecord',
-      redirect: '/myrecord/current',
+      path: '/mycollection',
+      redirect: '/mycollection/singles',
       components: {
-        default: Myrecord,
+        default: Mycollection,
         header: Header,
       },
       meta: {
@@ -94,9 +94,9 @@ const router = new Router({
       },
       children: [
         {
-          path: 'current',
-          name: 'current',
-          component: Current,
+          path: 'singles',
+          name: 'singles',
+          component: Singles,
           meta: {
             requireAuth: true,
           },
@@ -114,6 +114,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+    /*
     console.log(to.meta.requireAuth)
     if (to.meta.requireAuth) {  // 判断该路由是否需要登录权限
         if (store.state.user.userInfo.id) {  // 通过vuex state获取当前的token是否存在
@@ -129,5 +130,7 @@ router.beforeEach((to, from, next) => {
     else {
         next();
     }
+    */
+    next();
 })
 export default router;

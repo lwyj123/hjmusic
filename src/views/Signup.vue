@@ -1,4 +1,3 @@
-
 <template>
 <div class="login" id="login">
     <a href="javascript:;" class="log-close"><i class="icons close"></i></a>

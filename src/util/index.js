@@ -45,9 +45,31 @@ var secondsToFormat = function(seconds) {
     let seconds_part = parseInt(seconds%60)
     return (minutes_part<10 ? `0${minutes_part}` : `${minutes_part}`) + ":" + (seconds_part<10 ? `0${seconds_part}` : `${seconds_part}`)
 }
+var getNearestId = function(dom) {
+    if(dom.tagName == "BODY" && !dom.id) {
+        return null;
+    }
+    if(dom.id) {
+        return dom.id;
+    } else {
+        return getNearestId(dom.parentNode)
+    }
+}
+
+var getPureObj = function(obj) {
+    let newobj = {}
+    for(let key in obj) {
+        if(obj.hasOwnProperty(key) && key != "__ob__") {
+            newobj[key] = obj[key]
+        }
+    }
+    return newobj
+}
 
 export default {
     getBrowserInfo,
     storeWithExpiration,
     secondsToFormat,
+    getNearestId,
+    getPureObj,
 }

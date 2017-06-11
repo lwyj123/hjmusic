@@ -5,11 +5,10 @@ import { PLAYSONG } from '@/vuex/mutation-types'
 import { PAUSESONG } from '@/vuex/mutation-types'
 import { TOGGLEMUSICLIST } from '@/vuex/mutation-types'
 import { SETCURRENTTIME, SYNCCURRENTTIME, SETPLAYERDOM, INITSONG } from '@/vuex/mutation-types'
+import { ADDSONGTOLIST } from '@/vuex/mutation-types'
 
 const state = {
-    musicList: [{
-        
-    }],
+    musicList: [],
     dom: null, // audio dom element
     musicNow: {},
     isPlaying:false,
@@ -18,7 +17,6 @@ const state = {
     showList:false,//播放列表状态
 }
 const getters = {
-    getUserInfo: state => state.userInfo,
     getPlayerDOM: state => state.dom,
     isShowMusicList: state => state.showList,
     getMusicList: state => state.musicList,
@@ -26,7 +24,14 @@ const getters = {
     currentSecond: state => state.currentSecond,
     currentTimeFormat: state => util.secondsToFormat(state.currentSecond),
     durationSecond: state => state.duration,
-    durationTimeFormat: state => util.secondsToFormat(state.duration)
+    durationTimeFormat: state => util.secondsToFormat(state.duration),
+    nextSong: state => {
+        let now = state.musicList.indexOf(state.musicNow)
+        if(now == -1) {
+            return state.musicList[0]
+        }
+        return state.musicList[now+1]
+    }
 }
 const mutations = {
     [SETPLAYERDOM]: (state, audio) => {
@@ -64,7 +69,10 @@ const mutations = {
     },
     [SYNCCURRENTTIME]: (state) => {
         state.currentSecond = state.dom.currentTime
-    }
+    },
+    [ADDSONGTOLIST]: (state, music) => {
+        state.musicList.push(music)
+    },
 }
 const actions = {
     toggleMusicList:({ commit }) => {commit(TOGGLEMUSICLIST)},
@@ -89,6 +97,9 @@ const actions = {
     },
     initSong: ({ commit }, music) => {
         commit(INITSONG, music)
+    },
+    addSongToList: ({ commit }, music) => {
+        commit(ADDSONGTOLIST, music)
     },
 }  
 
