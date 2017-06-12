@@ -18,15 +18,18 @@
             <div class="hj-playList-listc">
                 <ul class="hj-playList-list">
                     <li v-for="(val,index) in getMusicList" :class="{playing:getMusicPlace==index}">
-                        <span>{{index+1}}.</span>
                         <b  @click.stop="selectMusic(index)">
                             {{val?val.name:你还没有添加列表}}
                         </b>
-                        <button class="iconfont" @click.stop="delMusic(index)">&#xe636;</button>
+                        <button class="iconfont" @click.stop="delSong(index)">delete</button>
                     </li>
                 </ul>
             </div>
-            <lyrics-box></lyrics-box>
+            <lyrics-box class="hj-playList-lyrics"
+                :music="getCurrentMusic" 
+                :currentSecond="currentSecond">
+                
+            </lyrics-box>
         </div>
     </div>
     </transition>
@@ -44,29 +47,29 @@
                     name: "fuck",
                     singer: "fuckyou"
                 },
-                getMusicPlace: 0
             }
         },
         components:{
             LyricsBox,
         },
         computed: {
-            ...mapGetters(['isShowMusicList', 'getMusicList']),
+            ...mapGetters(['isShowMusicList', 'getMusicList', 'getMusicPlace', 'getCurrentMusic', 'currentSecond']),
 
         },
-        methods:mapActions(['toggleMusicList','selectMusic','delMusic'])//getters.js里有注释功能
+        methods:mapActions(['toggleMusicList','selectMusic','delSong'])//getters.js里有注释功能
     }
 </script>
 <style lang="scss" scoped>
     .hj-playList {
         position: fixed;
         height:36vh;
-        bottom: 56px;
+        bottom: 55px;
         z-index: 2;
         width: 980px;
         overflow: auto;
         background: #eee;
         opacity: .8;
+        overflow: initial;
 
         .hj-playList-header {
             display: flex;
@@ -105,6 +108,33 @@
             background: #212121;
         }
     }
+    .hj-playList-content {
+        display: flex;
+        height: 129px;
+        .hj-playList-listc {
+            flex: 1 1 560px;
+            overflow: auto;
+            ul.hj-playList-list {
+                li {
+                    color: #ccc; 
+                    background-color: rgba(0,0,0,0.3);
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 2px 20px;
+                }
+                li.playing {
+                    background-color: #121212;
+                }
+            }
+        }
+        .hj-playList-lyrics {
+            flex: 0 0 420px;
+
+        }
+
+    }
+    
     .musicList .playing{
         color: #00e09e;
     }

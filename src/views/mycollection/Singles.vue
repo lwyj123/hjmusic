@@ -48,7 +48,7 @@ export default {
                     id: '3',
                     name: 'fuck',
                 },
-                lyrics_url: "http://fuck.com",
+                lyrics_url: "https://api.darlin.me/music/lyric/12/",
                 album: {
                     id: '5',
                     name: 'album test',
@@ -73,7 +73,7 @@ export default {
                     id: '3',
                     name: 'fuck',
                 },
-                lyrics_url: "http://fuck.com",
+                lyrics_url: "https://api.darlin.me/music/lyric/12/",
                 album: {
                     id: '5',
                     name: 'album test',

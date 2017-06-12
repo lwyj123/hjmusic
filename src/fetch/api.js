@@ -11,6 +11,7 @@ if(!DEVELOPMENT){
 // axios config that will be applied to every request
 axios.defaults.baseURL = Interface // interface address
 axios.defaults.timeout = 20000;
+axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';
 
 // stringify post array
@@ -96,11 +97,17 @@ export function fetch(url, params, method, headers, customConfigs = {}){
 
 export default {
     Login(params){
-        return fetch('/users/signin', params, 'post');
+        return fetch('/users/signin', params, 'post')
     },
     Signup(params){
-        return fetch('/users', params, 'post');
+        return fetch('/users', params, 'post')
     },
+    getLyrics(musicid) {
+        return fetch('/musics/${musicid}/lyrics')
+    },
+    getLyrics_url(lyrics_url) {
+        return fetch(lyrics_url)
+    }
 }
 
 

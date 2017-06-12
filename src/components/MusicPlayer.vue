@@ -3,7 +3,7 @@
         <music-list></music-list>
         <ul class="hj-playbar">
             <li class="hj-playBar-playbtns">
-                <button id="playBar-prevBtn"></button>
+                <button id="playBar-prevBtn" @click="prev()"></button>
                 <button id="playBar-playBtn" v-if="!playbarState.isPlaying" @click="play()"></button>
                 <button id="playBar-stopBtn" v-else @click="stop()"></button>
                 <button id="playBar-nextBtn" @click="next()"></button>
@@ -53,7 +53,7 @@
                         id: '3',
                         name: 'fuck',
                     },
-                    lyrics_url: "http://fuck.com",
+                    lyrics_url: "https://api.darlin.me/music/lyric/12/",
                     album: {
                         id: '5',
                         name: 'album test',
@@ -78,7 +78,7 @@
                         id: '3',
                         name: 'fuck',
                     },
-                    lyrics_url: "http://fuck.com",
+                    lyrics_url: "https://api.darlin.me/music/lyric/12/",
                     album: {
                         id: '5',
                         name: 'album test',
@@ -99,6 +99,7 @@
                 'durationSecond',
                 'durationTimeFormat',
                 'nextSong',
+                'prevSong'
             ]),
         },
         components:{
@@ -121,6 +122,11 @@
                 this.playbarState.isPlaying = false
                 this.$store.dispatch('pauseSong');
                 console.log("now stop")
+            },
+            prev() {
+                this.playbarState.isPlaying = true
+                this.$store.dispatch('initSong', this.prevSong);
+                this.$store.dispatch('playSong');   
             },
             next() {
                 this.playbarState.isPlaying = true

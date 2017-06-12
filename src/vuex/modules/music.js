@@ -1,16 +1,20 @@
 import util from '@/util'
+import api from 'api'
 import { NEXTSONG } from '@/vuex/mutation-types'
 import { PREVSONG } from '@/vuex/mutation-types'
 import { PLAYSONG } from '@/vuex/mutation-types'
 import { PAUSESONG } from '@/vuex/mutation-types'
 import { TOGGLEMUSICLIST } from '@/vuex/mutation-types'
 import { SETCURRENTTIME, SYNCCURRENTTIME, SETPLAYERDOM, INITSONG } from '@/vuex/mutation-types'
-import { ADDSONGTOLIST } from '@/vuex/mutation-types'
+import { ADDSONGTOLIST, DELSONG } from '@/vuex/mutation-types'
+
+import { GETLYRIC } from '@/vuex/mutation-types'
 
 const state = {
     musicList: [],
     dom: null, // audio dom element
     musicNow: {},
+    lyricNow: '',
     isPlaying:false,
     currentSecond:0,//音乐播放进度
     duration:0,//音乐长度
@@ -30,7 +34,20 @@ const getters = {
         if(now == -1) {
             return state.musicList[0]
         }
+        if(now+1 >= state.musicList.length) {
+            return state.musicList[0]
+        }
         return state.musicList[now+1]
+    },
+    prevSong: state => {
+        let now = state.musicList.indexOf(state.musicNow)
+        if(now == -1 || now == 0) {
+            return state.musicList[0]
+        }
+        return state.musicList[now-1]        
+    },
+    getMusicPlace: state => {
+        return state.musicList.indexOf(state.musicNow)
     }
 }
 const mutations = {
@@ -73,6 +90,12 @@ const mutations = {
     [ADDSONGTOLIST]: (state, music) => {
         state.musicList.push(music)
     },
+    [DELSONG]: (state, music_index) => {
+        state.musicList.splice(music_index, 1)
+    },
+    [GETLYRIC]: (state, lyric_obj) => {
+        state.lyricNow = lyric_obj
+    }
 }
 const actions = {
     toggleMusicList:({ commit }) => {commit(TOGGLEMUSICLIST)},
@@ -100,6 +123,16 @@ const actions = {
     },
     addSongToList: ({ commit }, music) => {
         commit(ADDSONGTOLIST, music)
+    },
+    delSong: ({ commit }, music_index) => {
+        commit(DELSONG, music_index)
+    },
+    getLyric_url: ({ commit }, lyric_url) => {
+        api.getLyrics_url(lyric_url).then(function(response) {
+            commit(GETLYRIC, response)
+        }).catch(function(error) {
+            console.log(error);
+        })
     },
 }  
 
