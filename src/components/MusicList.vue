@@ -61,9 +61,11 @@
 </script>
 <style lang="scss" scoped>
     .hj-playList {
+        display: flex;
+        flex-direction: column;
         position: fixed;
         height:36vh;
-        bottom: 55px;
+        bottom: 54px;
         z-index: 2;
         width: 980px;
         overflow: auto;
@@ -74,7 +76,8 @@
         .hj-playList-header {
             display: flex;
             align-items: center;
-            height: 40px;
+            
+            flex: 0 0 40px;
             font-size: 12px;
             color: #333;
             background: #101010;
@@ -110,7 +113,7 @@
     }
     .hj-playList-content {
         display: flex;
-        height: 129px;
+        flex: 1;
         .hj-playList-listc {
             flex: 1 1 560px;
             overflow: auto;
