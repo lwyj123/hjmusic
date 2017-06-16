@@ -19,7 +19,7 @@
                 </div>
             </li>
             <li class="hj-playBar-funcbtns">
-                <button id="playBar-showList" @click="toggleMusicList()">&#xe613;</button>                
+                <button id="playBar-showList" :class="{show : isShowMusicList}" @click="toggleMusicList()"></button>                
             </li>
         </ul>
     </div>
@@ -99,7 +99,8 @@
                 'durationSecond',
                 'durationTimeFormat',
                 'nextSong',
-                'prevSong'
+                'prevSong',
+                'isShowMusicList',
             ]),
         },
         components:{
@@ -223,6 +224,19 @@
         }
         li.hj-playBar-funcbtns {
             flex: 0 0 100px;
+            #playBar-showList {
+                border: none;
+                width: 30px;
+                height: 30px;
+                overflow: hidden;
+                cursor: pointer;
+                background-image: url(http://s2.music.126.net/style/web2/img/frame/playbar.png?d64aec0f5b1842762a54cab817ba6d81);
+                background-position: -42px -64px;
+                background-color: transparent;
+            }
+            #playBar-showList.show {
+                background-position: -42px -98px;
+            }
         }
     }
 }

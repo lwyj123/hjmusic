@@ -10,18 +10,18 @@
                 <a href="javascript:;" class="clear" data-action="clear"><span class="ico icn-del"></span>清除</a>                
             </div>
             <div class="hj-playList-header-song">
-                <p class="lytit f-ff0 f-thide j-flag">谷雨</p>
-                <span class="close" @click="toggleMusicList">关闭</span>
+                <p class="title">谷雨</p>
+                <span class="close" @click="toggleMusicList"></span>
             </div>
         </div>
         <div class="hj-playList-content">
             <div class="hj-playList-listc">
                 <ul class="hj-playList-list">
-                    <li v-for="(val,index) in getMusicList" :class="{playing:getMusicPlace==index}">
-                        <b  @click.stop="selectMusic(index)">
+                    <li v-for="(val,index) in getMusicList" :class="{playing:getMusicPlace==index}" @click="">
+                        <p @click.stop="selectMusic(index)">
                             {{val?val.name:你还没有添加列表}}
-                        </b>
-                        <button class="iconfont" @click.stop="delSong(index)">delete</button>
+                        </p>
+                        <button class="playlist-icon delbtn" @click.stop="delSong(index)"></button>
                     </li>
                 </ul>
             </div>
@@ -99,11 +99,19 @@
                 display: flex;
                 justify-content: center;
                 flex: 0 0 420px;
+                p.title {
+                    color: #fff;
+                }
                 .close {
                     position: absolute;
-                    width: 20px;
-                    height: 20px;
-
+                    top: 6px;
+                    right: 8px;
+                    width: 30px;
+                    height: 30px;
+                    overflow: hidden;
+                    cursor: pointer;
+                    background-image: url(http://s2.music.126.net/style/web2/img/frame/playlist.png?d6913329a522b876085665a29d80b789);
+                    background-position: -195px 9px;
                 }
             }
         }
@@ -125,6 +133,20 @@
                     display: flex;
                     justify-content: space-between;
                     padding: 2px 20px;
+                    .playlist-icon {
+                        width: 20px;
+                        cursor: pointer;
+                        border: none;
+                        background-image: url(http://s2.music.126.net/style/web2/img/frame/playlist.png?d6913329a522b876085665a29d80b789);
+                        background-color: transparent;
+                    }
+                    .delbtn {
+                        background-position: -51px 0;
+                        &:hover {
+                            background-position: -51px 56px;
+                        }
+                    }
+
                 }
                 li.playing {
                     background-color: #121212;
