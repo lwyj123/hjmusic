@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
-    <h1>This is the Index of HJbook</h1>
-    <h2>On the bottom right corner, there's a test button for return book and borrow book</h2>
+    <h1>This is the Index of HJmusic</h1>
+    <h2>enter 'My Music' to test the player</h2>
   </div>
 </template>
 

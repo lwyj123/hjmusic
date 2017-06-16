@@ -10,7 +10,7 @@
           </router-link>
         </el-col>
         <el-col class="hjbook-header-col" :span="12">
-          <router-link :to="{ path: '/mycollection' }" replace><el-menu-item index="1">My Record</el-menu-item></router-link>
+          <router-link :to="{ path: '/mycollection' }" replace><el-menu-item index="1">My Music</el-menu-item></router-link>
           <el-submenu index="2">
             <template slot="title">Books</template>
             <el-menu-item index="2-1">latest books</el-menu-item>
