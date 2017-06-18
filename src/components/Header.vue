@@ -11,14 +11,7 @@
         </el-col>
         <el-col class="hjbook-header-col" :span="12">
           <router-link :to="{ path: '/mycollection' }" replace><el-menu-item index="1">My Music</el-menu-item></router-link>
-          <el-submenu index="2">
-            <template slot="title">Books</template>
-            <el-menu-item index="2-1">latest books</el-menu-item>
-            <router-link :to="{ path: '/books' }" replace>
-              <el-menu-item index="2-2">all books</el-menu-item>
-            </router-link>
-            <el-menu-item index="2-3">book discovery</el-menu-item>
-          </el-submenu>
+          <el-menu-item index="1"><router-link :to="{ path: '/musiccoffee' }" replace>Music coffee</router-link></el-menu-item>
           <el-menu-item index="3"><a href="http://www.lwio.me" target="_blank">My homepage</a></el-menu-item>
         </el-col>
         <el-col class="hjbook-header-col" :span="4">

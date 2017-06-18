@@ -55,6 +55,10 @@ const mutations = {
         state.dom = audio
     },
     [INITSONG]: (state, music) => {
+        // whether music is undefined
+        if(!music) {
+            return
+        }
         state.musicNow = music
         state.currentSecond = 0
         state.isPlaying = true

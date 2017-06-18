@@ -2,8 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/views/Login'
 import Signup from '@/views/Signup'
-import Book from '@/views/Book'
-import Books from '@/views/Books'
+import Music from '@/views/Music'
 import Index from '@/views/Index'
 import Header from '@/components/Header'
 import Books_Category from '@/views/Books_Category'
@@ -16,6 +15,9 @@ import Settings from '@/views/personal/Settings'
 import Mycollection from '@/views/Mycollection'
 import Singles from '@/views/mycollection/Singles'
 import History from '@/views/mycollection/History'
+
+// Music Coffee
+import MusicCoffee from '@/views/MusicCoffee'
 
 import store from '../vuex/store'
 Vue.use(Router)
@@ -39,22 +41,13 @@ const router = new Router({
       component: Signup,
       //beforeEnter: isLogin,
     }, { 
-      path: '/book/:id', 
-      component: Book,
+      path: '/music/:id', 
+      component: Music,
     }, { 
-      path: '/books', 
+      path: '/musiccoffee', 
       components: {
-        default: Books,
-        header: Header,
+        default: MusicCoffee,
       },
-      children: [
-        {
-          // 当 /user/:id/profile 匹配成功，
-          // UserProfile 会被渲染在 User 的 <router-view> 中
-          path: ':category',
-          component: Books_Category
-        },
-      ]
     },{ 
       path: '/personal',
       redirect: '/personal/profile',
