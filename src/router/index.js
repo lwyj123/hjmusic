@@ -5,7 +5,7 @@ import Signup from '@/views/Signup'
 import Music from '@/views/Music'
 import Index from '@/views/Index'
 import Header from '@/components/Header'
-import Books_Category from '@/views/Books_Category'
+import Leftnav from '@/components/Leftnav'
 
 // Personal
 import Personal from '@/views/Personal'
@@ -29,6 +29,7 @@ const router = new Router({
       components: {
         default: Index,
         header: Header,
+        leftnav: Leftnav,
       }
     }, {
       path: '/login',

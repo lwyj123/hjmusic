@@ -1,9 +1,12 @@
 <template>
   <div id="app">
     <router-view class="header" name="header"></router-view>
-    <transition name="fade" mode="out-in">
-      <router-view class="body"></router-view>
-    </transition>
+    <div class="body">
+      <router-view class="leftnav" name="leftnav"></router-view>
+      <transition name="fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
+    </div>
     <music-player class="player"></music-player>
     <!--音频播放标签-->
     <audio src="" ref="audio" autoplay="autoplay" @ended="" @timeupdate="syncCurrentTime" @canplay=""></audio>
@@ -49,7 +52,13 @@ export default {
 
   }
   .body {
+    display: flex;
     flex: 1;
+    height: calc(100vh - 60px - 52px);
+    div:not(#leftnav) {
+      flex: 1;
+      overflow: auto;
+    }
   }
   .player {
 
