@@ -33,6 +33,9 @@ export default {
         },
         uploadMusic(event) {
             let self = this
+            console.dir(event)
+            console.dir(event.dataTransfer)
+            console.dir(event.dataTransfer.files[0])
             let file = event.dataTransfer.files[0]
             if (file.type.match('audio*')) {
                 var reader = new FileReader()
@@ -55,7 +58,7 @@ export default {
             this.mediaSource.buffer = this.mediaBuffer;
             //this.mediaSource.start(0, offset / 1000);
             this.mediaSource.connect(this.context.destination);
-             this.mediaSource.start();
+            this.mediaSource.start();
             // setup remote stream
             //remoteDestination = context.createMediaStreamDestination();
             //this.mediaSource.connect(remoteDestination);

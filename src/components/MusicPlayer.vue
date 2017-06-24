@@ -149,8 +149,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: fixed;
-    bottom: 0;
+
     padding: 0;
     margin: auto;
     background-color: transparent;

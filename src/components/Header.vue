@@ -1,48 +1,57 @@
 <template>
   <div id="header">
-    <el-menu theme="dark" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-      <el-row>
-        <el-col class="hjbook-header-col" :span="4">
-          <router-link :to="{ path: '/' }" replace>
-            <div class="logo">
-              <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1909982463,2705094677&fm=23&gp=0.jpg">
-            </div>
-          </router-link>
-        </el-col>
-        <el-col class="hjbook-header-col" :span="12">
-          <router-link :to="{ path: '/mycollection' }" replace><el-menu-item index="1">My Music</el-menu-item></router-link>
-          <el-menu-item index="1"><router-link :to="{ path: '/musiccoffee' }" replace>Music coffee</router-link></el-menu-item>
-          <el-menu-item index="3"><a href="http://www.lwio.me" target="_blank">My homepage</a></el-menu-item>
-        </el-col>
-        <el-col class="hjbook-header-col" :span="4">
-          <el-input id="hjbook-header-search"
-          placeholder="search the book name" 
-          icon="search" 
-          v-model="searchContent" 
-          :on-icon-click="handleIconClick">
-          </el-input>
-        </el-col>
-        <el-col class="hjbook-header-col" :span="4">
-          <el-dropdown v-if="user.userInfo.user_id" class="hjbook-header-profile" trigger="hover">
-            <span class="el-dropdown-link hjbook-header-profile-avatar">
-              <img src="http://img1.imgtn.bdimg.com/it/u=4042190513,2070669060&fm=23&gp=0.jpg" /> 
-              <p>{{user.userInfo.username}}</p>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>我的消息</el-dropdown-item>
-              <el-dropdown-item>
-                <router-link :to="{ path: '/personal' }" replace>设置</router-link>
-              </el-dropdown-item>  
-              <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <div v-else class="hjbook-header-sign">
-              <p><router-link :to="{ path: '/login' }" replace>signin </router-link></p>
-              <p><router-link :to="{ path: '/signup' }" replace> or Signup</router-link></p>
+
+      <div id="header-logo" class="hjbook-header-col">
+        <router-link :to="{ path: '/' }" replace>
+          <div class="logo">
+            <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1909982463,2705094677&fm=23&gp=0.jpg">
           </div>
-        </el-col>
-      </el-row>
-    </el-menu>
+        </router-link>
+      </div>
+      <el-menu id="header-nav" class="hjbook-header-col" mode="horizontal" @select="handleSelect">
+        <el-menu-item index="1">
+          <router-link :to="{ path: '/mycollection' }" replace>
+            <i class="iconfont icon-yinle"></i>
+            My Music
+          </router-link>
+        </el-menu-item>
+        <el-menu-item index="2">
+          <router-link :to="{ path: '/musiccoffee' }" replace>
+            <i class="iconfont icon-yinle"></i>
+            Music coffee
+          </router-link>
+        </el-menu-item>
+        <el-menu-item index="3">
+          <a href="http://www.lwio.me" target="_blank">My homepage</a>
+        </el-menu-item>
+      </el-menu>
+      <div id="header-search" class="hjbook-header-col">
+        <el-input id="hjbook-header-search"
+        placeholder="search the book name" 
+        icon="search" 
+        v-model="searchContent" 
+        :on-icon-click="handleIconClick">
+        </el-input>
+      </div>
+      <div id="header-profile" class="hjbook-header-col">
+        <el-dropdown v-if="user.userInfo.user_id" class="hjbook-header-profile" trigger="hover">
+          <span class="el-dropdown-link hjbook-header-profile-avatar">
+            <img src="http://img1.imgtn.bdimg.com/it/u=4042190513,2070669060&fm=23&gp=0.jpg" /> 
+            <p>{{user.userInfo.username}}</p>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>我的消息</el-dropdown-item>
+            <el-dropdown-item>
+              <router-link :to="{ path: '/personal' }" replace>设置</router-link>
+            </el-dropdown-item>  
+            <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <div v-else class="hjbook-header-sign">
+            <p><router-link :to="{ path: '/login' }" replace>signin </router-link></p>
+            <p><router-link :to="{ path: '/signup' }" replace> or Signup</router-link></p>
+        </div>
+      </div>
    
     <div class="line"></div>
   </div>
@@ -84,6 +93,40 @@ export default {
 </script>
 
 <style style lang="scss" scoped>
+#header {
+  display: flex;
+  #header-logo {
+    flex: 0 0 250px;
+    background-color: #14284a;
+  }
+  ul#header-nav {
+    display: flex;
+    background-color: #ffffff;
+    li {
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: left;
+      color: #828d9d;
+      a {
+        cursor: pointer;
+      }
+      &:hover {
+        color: #184d77; 
+        background: inherit;
+      }
+    }
+  }
+  #header-search {
+    flex: 1;
+    margin-left: auto;
+    max-width: 400px
+  }
+  #header-profile {
+    flex: 0 0 300px;
+  }
+}
+
 .logo {
   display: flex;
   margin:auto;
