@@ -95,6 +95,7 @@ export default {
 <style style lang="scss" scoped>
 #header {
   display: flex;
+  background-color: #ffffff;
   #header-logo {
     flex: 0 0 250px;
     background-color: #14284a;
