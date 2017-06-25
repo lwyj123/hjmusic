@@ -33,5 +33,7 @@ export default {
 <style style lang="scss" scoped>
 #leftnav {
   flex: 0 0 250px;
+  color: #9ab0c8;
+  background: linear-gradient(to bottom, #013763, #1c1b50);;
 }
 </style>

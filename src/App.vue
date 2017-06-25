@@ -7,7 +7,8 @@
         <router-view></router-view>
       </transition>
     </div>
-    <music-player class="player"></music-player>
+    <router-view class="footer" name="footer"></router-view>
+    
     <!--音频播放标签-->
     <audio src="" ref="audio" autoplay="autoplay" @ended="" @timeupdate="syncCurrentTime" @canplay=""></audio>
   </div>
@@ -55,12 +56,12 @@ export default {
     display: flex;
     flex: 1;
     height: calc(100vh - 60px - 52px);
-    div:not(#leftnav) {
+    & > div:not(#leftnav) {
       flex: 1;
       overflow: auto;
     }
   }
-  .player {
+  .footer {
 
   }
 }

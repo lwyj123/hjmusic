@@ -6,6 +6,7 @@ import Music from '@/views/Music'
 import Index from '@/views/Index'
 import Header from '@/components/Header'
 import Leftnav from '@/components/Leftnav'
+import MusicPlayer from '@/components/MusicPlayer'
 
 // Personal
 import Personal from '@/views/Personal'
@@ -30,6 +31,7 @@ const router = new Router({
         default: Index,
         header: Header,
         leftnav: Leftnav,
+        footer: MusicPlayer,
       }
     }, {
       path: '/login',
@@ -55,6 +57,7 @@ const router = new Router({
       components: {
         default: Personal,
         header: Header,
+        footer: MusicPlayer,
       },
       meta: {
         requireAuth: true,
@@ -82,6 +85,7 @@ const router = new Router({
       components: {
         default: Mycollection,
         header: Header,
+        footer: MusicPlayer,
       },
       meta: {
         requireAuth: true,

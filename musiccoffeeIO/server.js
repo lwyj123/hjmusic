@@ -16,18 +16,44 @@ var uuid = require('node-uuid');
 var static = require('node-static');
 var os = require('os');
 
+
+// keeping track of connections
+var sockets = {};
+var heartbeat = new Set();
 io.on('connection', function(socket) {
-    io.emit('this', {will: 'be received by everyone'});
-    socket.on('private message', function(from, msg) {
-        console.log('I received a private message by ', from, 'saying ', msg);
+    socket.on('getId', function() {
+        var id;
+        // determine an identifier that is unique for us.
+        do {
+            id = uuid.v4();
+        } while (sockets[id]);
+
+        // we have a unique identifier that can be sent to the client
+        console.log("dispatch id:" + id)
+        sockets[id] = socket;
+        socket.emit('yourId', id);
+        heartbeat.add(id);
+        console.log("now listeners number is: "+Object.getOwnPropertyNames(sockets).length)
     })
-    socket.on('disconnected', function() {
-        io.emit('user disconnected');
+    // heart beats 
+    socket.on('heartbeat', function(id){ 
+        heartbeat.add(id);
+        console.log('hear beat from: ' + id);
     })
-}) 
+})
 
+// sweep the dead socket
+setInterval(function(){
+    for(var key in sockets) {
+        if(!heartbeat.has(key)) {
+            delete sockets[key];
+        }
+    }
+    heartbeat.clear();
+    console.log("after sweep listeners number is: "+Object.getOwnPropertyNames(sockets).length)
+},10000)
 
-
+//
 
 
 

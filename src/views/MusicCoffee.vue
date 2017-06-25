@@ -1,14 +1,23 @@
 <template>
-    <div>
-        <div id="holder" 
-            :class="{hover:isdragging}"
-            @drop.prevent="uploadMusic($event)"
-            @dragover.prevent="dragover($event)"
-            @dragend="dragend()">
+    <div id="mc">
+        <div class="mc-playboard" >
+            <div class='mc-playboard-header'>
+                <p class="marquee">
+                    <span>The adhoahdiwa</span>
+                </p>
+            </div>
+            <div
+                class="mc-playboard-uploadbox"
+                :class="{hover:isdragging}"
+                @drop.prevent="uploadMusic($event)"
+                @dragover.prevent="dragover($event)"
+                @dragend="dragend()">
+            </div>
         </div>
-        <button @click="uploadMusic()">uploadMusic</button>
-        <audio controls id="player" autoplay/>
-            Your browser does not support the audio element.
+        <div class="mc-chatboard">
+            
+        </div>
+        <audio id="player" autoplay/>
         </audio>
     </div>
 </template>
@@ -25,6 +34,9 @@ export default {
         };
     },
     methods: {
+        initConnection() {
+            
+        },
         dragover(event) {
             this.isdragging = true;
         },
@@ -33,21 +45,31 @@ export default {
         },
         uploadMusic(event) {
             let self = this
-            console.dir(event)
-            console.dir(event.dataTransfer)
-            console.dir(event.dataTransfer.files[0])
+
+            // webrtc connection configuration
+            var pc_config = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]};
+
+            // keep track of peers and the id of this session
+            var peers = {};
+            var myId;
+
+
+
+            // releasing the system audio resources
+            this.context.close();
+            this.context = new AudioContext();
+
             let file = event.dataTransfer.files[0]
             if (file.type.match('audio*')) {
                 var reader = new FileReader()
-
                 // read the mp3 and decode the audio.
-
-                reader.onload = (function(readEvent) {
-                    self.context.decodeAudioData(readEvent.target.result, function(buffer) {
-                        self.mediaBuffer = buffer;
-                        self.playStream();
-                    });
-                });
+                reader.onload = function(readEvent) {
+                    self.context.decodeAudioData(readEvent.target.result)
+                        .then(function(buffer) {
+                            self.mediaBuffer = buffer;
+                            self.playStream();
+                        })
+                };
 
                 reader.readAsArrayBuffer(file);
             }
@@ -69,15 +91,25 @@ export default {
         }
     },
     mounted: function(){
+        this.initConnection();
         this.context = new AudioContext();
     },
-    socket: {
+    sockets: {
         connect() {
             console.log('connect')
+            this.$socket.emit('getId');
         },
         disconnect() {
             console.log('disconnect')
-        }
+        },
+        yourId(id) {
+            let self = this;
+            this.myId = id;
+            console.log('id = ' + id);
+            setInterval(function() {
+                self.$socket.emit('heartbeat', self.myId)
+            },2000)
+        },
     },
 
 };
@@ -85,13 +117,63 @@ export default {
 
 
 <style lang="scss" scoped>
-#holder {
-    width: 300px;
-    height: 300px;
-    background-color: red;
-    &.hover {
-        background-color: green;
+// marquee waiting for modify
+.marquee {
+    width: 100%;
+    margin: 0 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;
+    span {
+        display: inline-block;
+        padding-left: 100%;
+        text-indent: 0;
+        animation: marquee 15s linear infinite;
+        &:hover {
+            animation-play-state: paused;
+        }   
     }
+}
+@keyframes marquee {
+    0%   { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); }
+}
+
+
+
+#mc {
+    display: flex;
+
+}
+.mc-playboard {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    .mc-playboard-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 0 140px;
+        p.marquee {
+            width: 130px;
+            margin:auto;
+        }
+
+    }
+    .mc-playboard-uploadbox {
+        flex: 1;
+        &.hover {
+        background-color: green;
+        }
+    }
+}
+.mc-chatboard {
+    flex: 1;
+    height: 100%;
+    background-color: #f2f7fa;
+    border: solid 1px #d8e2e7;
 }
 button {
     width: 200px;

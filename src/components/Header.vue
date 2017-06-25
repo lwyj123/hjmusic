@@ -15,11 +15,9 @@
             My Music
           </router-link>
         </el-menu-item>
-        <el-menu-item index="2">
-          <router-link :to="{ path: '/musiccoffee' }" replace>
+        <el-menu-item index="2" @click="openMusicCoffee()">
             <i class="iconfont icon-yinle"></i>
             Music coffee
-          </router-link>
         </el-menu-item>
         <el-menu-item index="3">
           <a href="http://www.lwio.me" target="_blank">My homepage</a>
@@ -82,8 +80,23 @@ export default {
 
     },
     logout() {
-        util.storeWithExpiration.set('user', {username: null})
-        this.$store.dispatch("loadUserInfo")
+      util.storeWithExpiration.set('user', {username: null})
+      this.$store.dispatch("loadUserInfo")
+    },
+    openMusicCoffee() {
+      console.log("open music")
+      let url = 'http://localhost:8080/#/';
+      if(process.env.NODE_ENV !== 'development'){
+        url = 'http://chartdesk_web.staging.fooyo.sg/#/';
+      }
+      let params = [
+        'height='+ 600,
+        'width='+ 800,
+        'location=no',
+        'fullscreen=no' // only works in IE, but here for completeness
+      ].join(',');
+      let popup = window.open(url+'musiccoffee', 'popup_window', params); 
+      popup.moveTo(200,200);
     }
   },
   mounted() {
