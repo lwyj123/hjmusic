@@ -60,6 +60,9 @@ export default {
                 self.$socket.emit('heartbeat', self.myId)
             },2000)
             this.$socket.emit('logon', { from: this.myId, to: this.to } )
+            window.onbeforeunload = function() {
+                self.$socket.emit('logoff', { from: self.myId, to: self.to } )
+            }
         },
         error(error) {
             alert(error)

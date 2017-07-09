@@ -144,6 +144,9 @@ export default {
                 self.$socket.emit('heartbeat', self.myId)
                 console.log(`peers is ${JSON.stringify(self.peers)}`);
             },2000)
+            window.onbeforeunload = function() {
+
+            }
         },
         // when a listener logs on to the sessions we'll setup webrtc signalling for the session and check if we can start
         logon(message) {
@@ -167,6 +170,17 @@ export default {
                 self.gotDescription(from, desc);
             }, failed);
 
+        },
+        // when a listener leaves remove the rtc stream for that peer
+        logoff(message) {
+            try {
+                this.peers[message.from].peerconnection.removeStream(this.peers[message.from].stream);
+            } catch (err) {
+
+            }
+
+            this.peers[message.from].stream = undefined;
+            delete this.peers[message.from]
         },
         error(error) {
             alert(error)

@@ -58,6 +58,15 @@ io.on('connection', function(socket) {
             //socket.emit('error', 'Does not exsist at server.');
         }
     });
+    // when a listener log out
+    socket.on('logoff', function(message) {
+        console.log('logoff: ' + JSON.stringify(message))
+        if (sockets[message.to]) {
+            sockets[message.to].emit('logoff', message);
+        } else {
+            //socket.emit('error', 'Does not exsist at server.');
+        }
+    });
 
 })
 
