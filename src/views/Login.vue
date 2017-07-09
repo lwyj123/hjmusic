@@ -12,7 +12,11 @@
     </div>
     <div class="log-email">
         <input type="text" placeholder="Email" :class="'log-input' + (account==''?' log-input-empty':'')" v-model="account">
-        <input type="password" placeholder="Password" :class="'log-input' + (password==''?' log-input-empty':'')"  v-model="password">
+        <input type="password" 
+            placeholder="Password" 
+            :class="'log-input' + (password==''?' log-input-empty':'')"
+            @keyup.enter="login()"
+            v-model="password">
         <button class="log-btn" @click="login">Login</button>
     </div>
     <Loading v-if="isLoading" marginTop="-30%"></Loading>
