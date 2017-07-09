@@ -24,6 +24,13 @@
 
 <script>
 import api from 'api'
+
+// webrtc connection configuration
+var pc_config = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]};
+
+function failed(code) {
+    console.log("Failure callback: " + code);
+}
 export default {
     data() {
         return {
@@ -31,6 +38,11 @@ export default {
             isdragging: false,
             mediaBuffer: null,
             mediaSource: null,
+
+            myId: null,
+            peers: {},
+            remoteDestination: null,
+            mediaDescription: null,
         };
     },
     methods: {
@@ -45,13 +57,6 @@ export default {
         },
         uploadMusic(event) {
             let self = this
-
-            // webrtc connection configuration
-            var pc_config = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]};
-
-            // keep track of peers and the id of this session
-            var peers = {};
-            var myId;
 
 
 
@@ -82,12 +87,41 @@ export default {
             this.mediaSource.connect(this.context.destination);
             this.mediaSource.start();
             // setup remote stream
-            //remoteDestination = context.createMediaStreamDestination();
-            //this.mediaSource.connect(remoteDestination);
+            this.remoteDestination = this.context.createMediaStreamDestination();
+            this.mediaSource.connect(this.remoteDestination);
 
-            /*for (var peer in peers) {
+            // 向所有节点添加流(播放)
+            for (var peer in this.peers) {
                 startPlayingIfPossible(peer);
-            }*/
+            }
+        },
+        // checks if media is present and starts streaming media to a connected listener if possible
+        startPlayingIfPossible(from) {
+            var self = this;
+            // add the stream to the peerconnection for this connection
+            if (this.mediaSource && this.remoteDestination) {
+                var constraints = { mandatory: {}, optional: [] };
+                // constraints.optional[0] = { 'bandwidth' : 100 }; // does not seem to influence quality
+                this.peers[from].peerconnection.addStream(remoteDestination.stream, constraints);
+                this.peers[from].stream = remoteDestination.stream;
+                this.peers[from].peerconnection.createOffer(function(desc) {
+                    self.gotDescription(from, desc);
+                }, failed);
+
+                this.sendMediaDescription(this.peers[from].dataChannel);
+            }
+        },
+        // Sends media meta information over a rtc data channel to a connected listener
+        sendMediaDescription(channel) {
+            if (this.mediaDescription && channel.readyState === 'open') {
+                var data = JSON.stringify(this.mediaDescription);
+                channel.send(data);
+            }
+        },
+        // is called when SDP is received from a connected listener
+        gotDescription(from, desc) {
+            this.peers[from].peerconnection.setLocalDescription(desc);
+            this.$socket.emit('message', { from: this.myId, to: from, data: { type: 'sdp', sdp: desc } });
         }
     },
     mounted: function(){
@@ -108,7 +142,34 @@ export default {
             console.log('id = ' + id);
             setInterval(function() {
                 self.$socket.emit('heartbeat', self.myId)
+                console.log(`peers is ${JSON.stringify(self.peers)}`);
             },2000)
+        },
+        // when a listener logs on to the sessions we'll setup webrtc signalling for the session and check if we can start
+        logon(message) {
+            var self = this;
+            var pc = new RTCPeerConnection(pc_config, { optional: [ { RtpDataChannels: true } ]});
+
+            pc.onicecandidate = function(event) {
+                self.$socket.emit('message', { from: this.myId, to: message.from, data: { type: 'candidate', candidate: event.candidate } } );
+            }
+
+            var from = message.from;
+            this.peers[from] = { peerconnection: pc, stream: undefined };
+
+            // create a data channel for sending the media description
+            this.peers[from].dataChannel = this.peers[from].peerconnection.createDataChannel('mediaDescription', { reliable: true });
+            this.peers[from].dataChannel.onopen = function() {
+                startPlayingIfPossible(from);
+            };
+
+            this.peers[from].peerconnection.createOffer(function(desc) {
+                self.gotDescription(from, desc);
+            }, failed);
+
+        },
+        error(error) {
+            alert(error)
         },
     },
 

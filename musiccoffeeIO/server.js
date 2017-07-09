@@ -40,6 +40,25 @@ io.on('connection', function(socket) {
         heartbeat.add(id);
         console.log('hear beat from: ' + id);
     })
+
+    // when a message is received forward it to the addressee
+    socket.on('message', function(message) {
+        if (sockets[message.to]) {
+            sockets[message.to].emit('message', message);
+        } else {
+            socket.emit('disconnected', message.from);
+        }
+    });
+    // when a listener logs on let the media streaming know about it
+    socket.on('logon', function(message) {
+        console.log('logon: ' + JSON.stringify(message))
+        if (message.to && sockets[message.to]) {
+            sockets[message.to].emit('logon', message);
+        } else {
+            //socket.emit('error', 'Does not exsist at server.');
+        }
+    });
+
 })
 
 // sweep the dead socket
@@ -53,7 +72,6 @@ setInterval(function(){
     console.log("after sweep listeners number is: "+Object.getOwnPropertyNames(sockets).length)
 },10000)
 
-//
 
 
 

@@ -18,7 +18,8 @@ import Singles from '@/views/mycollection/Singles'
 import History from '@/views/mycollection/History'
 
 // Music Coffee
-import MusicCoffee from '@/views/MusicCoffee'
+import MusicCoffee from '@/views/musicCoffee/MusicCoffee'
+import MusicCoffee_listener from '@/views/musicCoffee/MusicCoffee_listener'
 
 import store from '../vuex/store'
 Vue.use(Router)
@@ -51,7 +52,12 @@ const router = new Router({
       components: {
         default: MusicCoffee,
       },
-    },{ 
+    }, {
+      path: '/musiccoffee_listener', 
+      components: {
+        default: MusicCoffee_listener,
+      },      
+    }, { 
       path: '/personal',
       redirect: '/personal/profile',
       components: {
