@@ -92,7 +92,7 @@ export default {
 
             // 向所有节点添加流(播放)
             for (var peer in this.peers) {
-                startPlayingIfPossible(peer);
+                this.startPlayingIfPossible(peer);
             }
         },
         // checks if media is present and starts streaming media to a connected listener if possible
@@ -102,8 +102,8 @@ export default {
             if (this.mediaSource && this.remoteDestination) {
                 var constraints = { mandatory: {}, optional: [] };
                 // constraints.optional[0] = { 'bandwidth' : 100 }; // does not seem to influence quality
-                this.peers[from].peerconnection.addStream(remoteDestination.stream, constraints);
-                this.peers[from].stream = remoteDestination.stream;
+                this.peers[from].peerconnection.addStream(this.remoteDestination.stream, constraints);
+                this.peers[from].stream = this.remoteDestination.stream;
                 this.peers[from].peerconnection.createOffer(function(desc) {
                     self.gotDescription(from, desc);
                 }, failed);
@@ -135,6 +135,18 @@ export default {
         },
         disconnect() {
             console.log('disconnect')
+        },
+        // when a message is received from a listener we'll update the rtc session accordingly
+        message(message) {
+            console.log('Received message: ' + JSON.stringify(message.data));
+
+            if (message.data.type === 'candidate') {
+                if (message.data.candidate) {
+                    this.peers[message.from].peerconnection.addIceCandidate(new RTCIceCandidate(message.data.candidate));
+                }
+            } else if (message.data.type === 'sdp') {
+                this.peers[message.from].peerconnection.setRemoteDescription(new RTCSessionDescription(message.data.sdp));
+            }
         },
         yourId(id) {
             let self = this;

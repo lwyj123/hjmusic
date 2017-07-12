@@ -38,11 +38,12 @@ io.on('connection', function(socket) {
     // heart beats 
     socket.on('heartbeat', function(id){ 
         heartbeat.add(id);
-        console.log('hear beat from: ' + id);
+        //console.log('hear beat from: ' + id);
     })
 
     // when a message is received forward it to the addressee
     socket.on('message', function(message) {
+        console.log('message: ' + JSON.stringify(message))
         if (sockets[message.to]) {
             sockets[message.to].emit('message', message);
         } else {
