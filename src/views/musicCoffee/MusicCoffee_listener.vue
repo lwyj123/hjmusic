@@ -19,6 +19,9 @@
 </template>
 
 <script>
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+// configuration for peer connections
+var pc_config = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]};
 import api from 'api'
 export default {
     data() {
@@ -29,6 +32,8 @@ export default {
 
             // room host's id
             to: null,
+            // my id
+            myId: null,
         };
     },
     methods: {
@@ -42,6 +47,29 @@ export default {
             alert('This page needs Google Chrome to play correctly.');
         }
         this.to = this.$route.query.id
+
+        this.context = new AudioContext()
+        // check for required APIs
+        if (RTCPeerConnection) {
+        } else {
+            alert('The required APIs are not fully supported in this browser.');
+        }
+        // creates a peer connection
+        var pc = new RTCPeerConnection(pc_config, { optional: [ { RtpDataChannels: true } ]});
+
+        // creates a data channel to receive meta data 
+        var dataChannel = pc.createDataChannel('mediaDescription', { reliable: false });
+        dataChannel.onmessage = function (event) {
+            try {
+                var mediaDescription = JSON.parse(event.data);
+                console.log('Listening to ' + mediaDescription.title + ' by ' + mediaDescription.artist);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        pc.onicecandidate = function(event) {
+            socket.emit('message', { from: myId, to: to, data: { type: 'candidate', candidate: event.candidate } });
+        }
         
     },
     sockets: {
@@ -60,6 +88,7 @@ export default {
                 self.$socket.emit('heartbeat', self.myId)
             },2000)
             this.$socket.emit('logon', { from: this.myId, to: this.to } )
+            // logoff when refresh
             window.onbeforeunload = function() {
                 self.$socket.emit('logoff', { from: self.myId, to: self.to } )
             }
