@@ -46,6 +46,7 @@ export default {
 
 <style lang="scss">
 @import "../static/style/public.scss";
+@import './styles/index.scss'; // 全局自定义的css样式`
 #app {
   display: flex;
   flex-direction: column;

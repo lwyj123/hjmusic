@@ -21,7 +21,9 @@ import History from '@/views/mycollection/History'
 import MusicCoffee from '@/views/musicCoffee/MusicCoffee'
 import MusicCoffee_listener from '@/views/musicCoffee/MusicCoffee_listener'
 
-import Layout from '@/views/layout'
+// new 
+import Layout from 'views/layout/Layout'
+import dashboard from 'views/dashboard'
 
 import store from '../vuex/store'
 Vue.use(Router)
@@ -42,7 +44,7 @@ const router = new Router({
       redirect: '/dashboard',
       name: '首页',
       hidden: true,
-      //children: [{ path: 'dashboard', component: dashboard }]
+      children: [{ path: 'dashboard', component: dashboard }]
     }, {
       path: '/login',
       name: 'login',

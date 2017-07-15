@@ -27,7 +27,13 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js',
       'api$': path.resolve(APP_PATH, 'fetch/api.js'),
       'util$': path.resolve(APP_PATH,'util/index.js'),
-      '@': resolve('src')
+      '@': resolve('src'),
+      'components': path.resolve(__dirname, '../src/components'),
+      'views': path.resolve(__dirname, '../src/views'),
+      'styles': path.resolve(__dirname, '../src/styles'),
+      'utils': path.resolve(__dirname, '../src/utils'),
+      'router': path.resolve(__dirname, '../src/router'),
+      'static': path.resolve(__dirname, '../static')
     }
   },
   module: {
