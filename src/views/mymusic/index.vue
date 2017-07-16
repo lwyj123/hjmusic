@@ -61,7 +61,7 @@
         padding-top: 40px;
       }
       .el-col.content-container > div {
-        padding: 40px;
+        padding-top: 40px;
       }
     }
   }
