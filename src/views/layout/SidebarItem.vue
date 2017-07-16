@@ -35,6 +35,9 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+    .el-submenu {
+        text-align: left;
+    }
 	.svg-icon {
 		margin-right: 15px;
 	}

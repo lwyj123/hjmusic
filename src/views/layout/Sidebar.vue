@@ -1,7 +1,6 @@
 <template>
 	<el-menu mode="vertical" theme="dark" :default-active="$route.path">
-		<!-- <sidebar-item :routes='permission_routers'></sidebar-item> -->
-    <div>test</div>
+		<sidebar-item :routes='permission_routers'></sidebar-item>
 	</el-menu>
 </template>
 
@@ -10,10 +9,24 @@
   import SidebarItem from './SidebarItem';
   export default {
     components: { SidebarItem },
+    data() {
+      return {
+        permission_routers: [
+          {
+            path: '/permission',
+            redirect: '/permission/index',
+            name: '权限测试',
+            icon: 'quanxian',
+            meta: { role: ['admin'] },
+            noDropdown: false,
+          },
+        ]
+      }
+    },
     computed: {
-      ...mapGetters([
+      /*...mapGetters([
         'permission_routers'
-      ])
+      ])*/
     }
   }
 </script>

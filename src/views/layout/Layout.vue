@@ -22,8 +22,7 @@
     },
     computed: {
       sidebar() {
-        /*return this.$store.state.app.sidebar;*/
-        return true;
+        return this.$store.state.app.sidebar;
       }
     }
   }
