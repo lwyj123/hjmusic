@@ -26,6 +26,8 @@ import Layout from 'views/layout/Layout'
 import dashboard from 'views/dashboard'
 
 import mymusic from 'views/mymusic'
+import musician from 'views/mymusic/musician'
+import playlist from 'views/mymusic/playlist'
 
 
 /* error page */
@@ -71,7 +73,14 @@ const router = new Router({
       icon: 'quanxian',
       meta: { role: ['admin', 'user'] },
       hidden: true,
-      children: [{ path: 'music', component: mymusic }]
+      children: [
+        { 
+          path: 'music', 
+          component: mymusic ,
+          redirect: '/my/music/musician',
+          children: [{ path: 'musician', component: musician }, { path: 'playlist', component: playlist}]
+        },
+      ]
     }, {
       path: '/errorpage',
       component: Layout,
@@ -92,9 +101,6 @@ const router = new Router({
       name: 'signup',
       component: Signup,
       //beforeEnter: isLogin,
-    }, { 
-      path: '/music/:id', 
-      component: Music,
     }, { 
       path: '/musiccoffee', 
       components: {
@@ -162,7 +168,7 @@ const router = new Router({
         },
       ]
     },
-    { path: '*', redirect: '/404', hidden: true },
+    //{ path: '*', redirect: '/404', hidden: true },
   ]
 })
 

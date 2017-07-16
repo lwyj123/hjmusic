@@ -56,7 +56,6 @@ export default {
   .body {
     display: flex;
     flex: 1;
-    height: calc(100vh - 60px - 52px);
     & > div:not(#leftnav) {
       flex: 1;
       overflow: auto;
