@@ -27,11 +27,21 @@ import dashboard from 'views/dashboard'
 
 import mymusic from 'views/mymusic'
 
+
+/* error page */
+import Err404 from 'views/error/404'
+import Err401 from 'views/error/401'
+
+
 import store from '../vuex/store'
 Vue.use(Router)
 
 const router = new Router({
   routes: [
+    { path: '/404', component: Err404, hidden: true },
+    { path: '/401', component: Err401, hidden: true },
+
+
     {
       path: '/',
       components: {
@@ -62,6 +72,16 @@ const router = new Router({
       meta: { role: ['admin', 'user'] },
       hidden: true,
       children: [{ path: 'music', component: mymusic }]
+    }, {
+      path: '/errorpage',
+      component: Layout,
+      redirect: 'noredirect',
+      name: '错误页面',
+      icon: '404',
+      children: [
+        { path: '401', component: Err401, name: '401' },
+        { path: '404', component: Err404, name: '404' }
+      ]
     }, {
       path: '/login',
       name: 'login',
@@ -141,7 +161,8 @@ const router = new Router({
           },
         },
       ]
-    }
+    },
+    { path: '*', redirect: '/404', hidden: true },
   ]
 })
 
