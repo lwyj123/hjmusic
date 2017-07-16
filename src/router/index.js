@@ -25,6 +25,8 @@ import MusicCoffee_listener from '@/views/musicCoffee/MusicCoffee_listener'
 import Layout from 'views/layout/Layout'
 import dashboard from 'views/dashboard'
 
+import mymusic from 'views/mymusic'
+
 import store from '../vuex/store'
 Vue.use(Router)
 
@@ -48,6 +50,18 @@ const router = new Router({
       name: '首页',
       hidden: true,
       children: [{ path: 'dashboard', component: dashboard }]
+    }, {
+      path: '/my',
+      components: {
+        default: Layout,
+        footer: MusicPlayer,
+      },
+      redirect: '/my/music',
+      name: '权限测试',
+      icon: 'quanxian',
+      meta: { role: ['admin', 'user'] },
+      hidden: true,
+      children: [{ path: 'music', component: mymusic }]
     }, {
       path: '/login',
       name: 'login',
