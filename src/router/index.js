@@ -40,7 +40,10 @@ const router = new Router({
       }
     }, {
       path: '/newindex',
-      component: Layout,
+      components: {
+        default: Layout,
+        footer: MusicPlayer,
+      },
       redirect: '/dashboard',
       name: '首页',
       hidden: true,
