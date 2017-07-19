@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import Loading from '../components/Loading.vue'
-import util from '../util'
-import api from '../fetch/api'
+import Loading from '@/components/Loading.vue'
+import utils from '@/utils'
+import api from '@/fetch/api'
 export default {
   name: 'Login',
   data(){

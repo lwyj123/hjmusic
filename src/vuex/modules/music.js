@@ -1,4 +1,4 @@
-import util from '@/util'
+import utils from '@/utils'
 import api from 'api'
 import { NEXTSONG, PREVSONG, PLAYSONG, PAUSESONG} from '@/vuex/mutation-types'
 import { TOGGLEMUSICLIST } from '@/vuex/mutation-types'
@@ -23,9 +23,9 @@ const getters = {
     getMusicList: state => state.musicList,
     getCurrentMusic: state => state.musicNow,
     currentSecond: state => state.currentSecond,
-    currentTimeFormat: state => util.secondsToFormat(state.currentSecond),
+    currentTimeFormat: state => utils.secondsToFormat(state.currentSecond),
     durationSecond: state => state.duration,
-    durationTimeFormat: state => util.secondsToFormat(state.duration),
+    durationTimeFormat: state => utils.secondsToFormat(state.duration),
     nextSong: state => {
         let now = state.musicList.indexOf(state.musicNow)
         if(now == -1) {

@@ -6,7 +6,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import util from '@/util'
+import utils from '@/utils'
 export default {
   name: 'leftnav',
   data() {

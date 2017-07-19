@@ -57,7 +57,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import util from '@/util'
+import utils from '@/utils'
 export default {
   name: 'header',
   data() {
@@ -80,7 +80,7 @@ export default {
 
     },
     logout() {
-      util.storeWithExpiration.set('user', {username: null})
+      utils.storeWithExpiration.set('user', {username: null})
       this.$store.dispatch("loadUserInfo")
     },
     openMusicCoffee() {

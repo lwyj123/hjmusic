@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import util from '@/util'
+import utils from '@/utils'
 import { SET_INTERVAL } from './mutation-types'
 import { PRODUCE_FOOD } from './mutation-types'
 import { PRODUCE_FARMER } from './mutation-types'

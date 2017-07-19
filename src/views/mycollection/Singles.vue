@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import util from 'util'
+import utils from 'utils'
 import {mapActions,mapGetters} from 'vuex'
 export default {
     data () {

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
-import util from '../util'
+import utils from '../utils'
 
 let Interface = 'http://lw-ezio.com/hjbook_api'
 /*

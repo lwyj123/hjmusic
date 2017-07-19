@@ -1,8 +1,8 @@
-import util from '@/util'
+import utils from '@/utils'
 import { SET_USER_INFO } from '../mutation-types'
 
 const state = {
-    userInfo: util.storeWithExpiration.get('user') || {}
+    userInfo: utils.storeWithExpiration.get('user') || {}
 }
 const getters = {
     getUserInfo: state => state.userInfo
@@ -15,7 +15,7 @@ const mutations = {
 const actions = {
     setUserInfo: ({ commit }, user) => {commit(SET_USER_INFO, user)},
     loadUserInfo({ commit }){
-        let user = util.storeWithExpiration.get('user');
+        let user = utils.storeWithExpiration.get('user');
         if(!user){
             commit(SET_USER_INFO, {})
         } else {

@@ -25,7 +25,7 @@
 
 <script>
 import Loading from '../components/Loading.vue'
-import util from '../util'
+import utils from '../utils'
 import api from '../fetch/api'
 export default {
   name: 'Login',
