@@ -7,7 +7,7 @@
 </template>
 <script>
     import {mapActions,mapGetters} from 'vuex'
-    import Base64 from '../util/base64'
+    import Base64 from '../utils/base64'
     export default{
         props: ['currentSecond', 'music'],
         data(){
