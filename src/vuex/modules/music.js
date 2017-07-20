@@ -1,5 +1,5 @@
 import utils from '@/utils'
-import api from 'api'
+import {  } from 'api/login';
 import { NEXTSONG, PREVSONG, PLAYSONG, PAUSESONG} from '@/vuex/mutation-types'
 import { TOGGLEMUSICLIST } from '@/vuex/mutation-types'
 import { SETCURRENTTIME, SYNCCURRENTTIME, SETPLAYERDOM, INITSONG } from '@/vuex/mutation-types'

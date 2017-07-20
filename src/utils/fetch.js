@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Message } from 'element-ui';
-import store from '../store';
+import store from './';
 // import router from '../router';
 
 // 创建axios实例

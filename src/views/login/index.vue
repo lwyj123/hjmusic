@@ -30,7 +30,6 @@
 </template>
 
 <script>
-  import { isWscnEmail } from 'utils/validate';
   import socialSignin from './socialSignin';
 
   export default {
@@ -38,7 +37,8 @@
     name: 'login',
     data() {
       const validateEmail = (rule, value, callback) => {
-        if (!isWscnEmail(value)) {
+        // TODO: add validator
+        if (false) {
           callback(new Error('请输入正确的合法邮箱'));
         } else {
           callback();
@@ -65,7 +65,7 @@
           ]
         },
         loading: false,
-        showDialog: false
+        showDialog: true,
       }
     },
     methods: {

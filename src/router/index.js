@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/views/Login'
+import Login from '@/views/login'
 import Signup from '@/views/Signup'
 import Music from '@/views/Music'
 import Index from '@/views/Index'

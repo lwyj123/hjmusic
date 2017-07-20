@@ -29,9 +29,6 @@ function failedCreateAnswer(error) {
     console.log("Failure callback from createAnswer: " + JSON.stringify(error));
 }
 
-
-
-import api from 'api'
 export default {
     data() {
         return {

@@ -25,10 +25,10 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      'api$': path.resolve(APP_PATH, 'fetch/api.js'),
       'utils$': path.resolve(APP_PATH,'utils/index.js'),
       '@': resolve('src'),
       'components': path.resolve(__dirname, '../src/components'),
+      'api': path.resolve(__dirname, '../src/api'),
       'views': path.resolve(__dirname, '../src/views'),
       'assets': path.resolve(__dirname, '../src/assets'),
       'styles': path.resolve(__dirname, '../src/styles'),
