@@ -60,7 +60,7 @@ const user = {
       return new Promise((resolve, reject) => {
         loginByEmail(email, userInfo.password).then(response => {
           const data = response.data;
-          storage.storeWithExpiration.set('Admin-Token', response.data.token, , 60000)
+          storage.storeWithExpiration.set('Admin-Token', response.data.token, 60000)
           Cookies.set('Admin-Token', response.data.token);
           commit('SET_TOKEN', data.token);
           resolve();
