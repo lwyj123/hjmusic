@@ -1,6 +1,6 @@
 # hjbook
 
-> A Vue.js project for practise
+> A Vue.js project for practise (WebRTC for music-coffee)
 
 ## Build Setup
 
