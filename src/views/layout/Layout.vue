@@ -33,7 +33,7 @@
 	.app-wrapper {
 		@include clearfix;
 		position: relative;
-		height: 100%;
+		height: calc(100vh - 51px);
 		width: 100%;
 		&.hideSidebar {
 			.sidebar-wrapper {

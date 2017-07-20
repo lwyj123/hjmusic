@@ -43,17 +43,8 @@ const router = new Router({
     { path: '/404', component: Err404, hidden: true },
     { path: '/401', component: Err401, hidden: true },
 
-
     {
       path: '/',
-      components: {
-        default: Index,
-        header: Header,
-        leftnav: Leftnav,
-        footer: MusicPlayer,
-      }
-    }, {
-      path: '/newindex',
       components: {
         default: Layout,
         footer: MusicPlayer,

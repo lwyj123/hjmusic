@@ -3,7 +3,7 @@
 		<hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
 		<levelbar></levelbar>
 		<tabs-view></tabs-view>
-		<el-dropdown class="avatar-container" trigger="click">
+		<el-dropdown v-if="user" class="avatar-container" trigger="click">
 			<div class="avatar-wrapper">
 				<img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
 				<i class="el-icon-caret-bottom"></i>
@@ -22,6 +22,10 @@
 				<el-dropdown-item divided><span @click="logout" style="display:block;">退出登录</span></el-dropdown-item>
 			</el-dropdown-menu>
 		</el-dropdown>
+        <div v-else class="login-container">
+            <router-link to="/login">Login</router-link>
+            <router-link to="/signup">Signup</router-link>
+        </div>
 	</el-menu>
 </template>
 
@@ -46,7 +50,8 @@
       ...mapGetters([
         'sidebar',
         'name',
-        'avatar'
+        'avatar',
+        'user',
       ])
     },
     methods: {
@@ -105,6 +110,27 @@
 				}
 			}
 		}
+        .login-container {
+            height: 50px;
+            display: inline-block;
+            position: absolute;
+            right: 35px;
+            .avatar-wrapper {
+                cursor: pointer;
+                position: relative;
+                .user-avatar {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 10px;
+                }
+                .el-icon-caret-bottom {
+                    position: absolute;
+                    right: -20px;
+                    top: 25px;
+                    font-size: 12px;
+                }
+            }            
+        }
 	}
 </style>
 
