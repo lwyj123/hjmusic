@@ -19,6 +19,11 @@ const app = {
       }
       state.sidebar.opened = !state.sidebar.opened;
     },
+    TOGGLE_PLAYERLIST: state => {
+      if (state.player.musiclist.opened) {
+        Cookies.set('playerMusiclist', 1);
+      }
+    },
     ADD_VISITED_VIEWS: (state, view) => {
       if (state.visitedViews.some(v => v.path === view.path)) return
       state.visitedViews.push({ name: view.name, path: view.path })

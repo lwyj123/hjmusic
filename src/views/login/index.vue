@@ -30,6 +30,7 @@
 </template>
 
 <script>
+  import storage from 'utils/storage';
   import socialSignin from './socialSignin';
 
   export default {
