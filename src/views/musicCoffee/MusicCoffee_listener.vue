@@ -28,6 +28,22 @@ function failedSetRemoteDescription(error) {
 function failedCreateAnswer(error) {
     console.log("Failure callback from createAnswer: " + JSON.stringify(error));
 }
+// Attach a media stream to an element.
+function attachMediaStream(element, stream) {
+    if (typeof element.srcObject !== 'undefined') {
+      element.srcObject = stream;
+    } else if (typeof element.mozSrcObject !== 'undefined') {
+      element.mozSrcObject = stream;
+    } else if (typeof element.src !== 'undefined') {
+      element.src = URL.createObjectURL(stream);
+    } else {
+      console.log('Error attaching stream to element.');
+    }
+  };
+
+function reattachMediaStream(to, from) {
+  to.src = from.src;
+};
 
 export default {
     data() {
@@ -96,7 +112,42 @@ export default {
                 console.log(event);
             }
         }
-        
+        function monitorBitrate() {
+            /*if (monitorInterval) {
+                timestampPrev = 0;
+                bytesPrev = 0;
+                //clearInterval(monitorInterval);
+            }
+
+            monitorInterval = setInterval(function() {
+                if (pc.getRemoteStreams()[0]) {
+                    pc.getStats(function(stats) {
+                        var bitrateTxt = 'No bitrate stats';
+                        var results = stats.result();
+                        for (var i in results) {
+                            var result = results[i];
+                            if (!result.local || result.local === result) {
+                                if (result.type === 'ssrc') {
+                                    var bytesNow = result.stat('bytesReceived');
+                                    if (timestampPrev > 0) {
+                                        var bitrate = Math.round((bytesNow - bytesPrev) * 8 / (result.timestamp - timestampPrev));
+
+                                        if (bitrate > 0) {
+                                            var bitrateTxt = 'Received in ' + bitrate + ' kbits/sec';
+                                        }   
+                                    }
+
+                                    timestampPrev = result.timestamp;
+                                    bytesPrev = bytesNow;
+                                }
+                            }
+
+                            rate.innerHTML = bitrateTxt;
+                        }
+                    });
+                }
+            }, 1000);*/
+        }
     },
     sockets: {
         connect() {
