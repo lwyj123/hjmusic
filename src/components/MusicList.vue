@@ -6,7 +6,7 @@
     <div class="hj-playList" v-show="isShowMusicList">
         <div class="hj-playList-header">
             <div class="hj-playList-header-list">
-                <h4>播放列表（{{getMusicList?getMusicList.length:0}}首）</h4>
+                <h4>播放列表（{{musicList?musicList.length:0}}首）</h4>
                 <a href="javascript:;" class="clear" data-action="clear"><span class="ico icn-del"></span>清除</a>                
             </div>
             <div class="hj-playList-header-song">
@@ -17,7 +17,7 @@
         <div class="hj-playList-content">
             <div class="hj-playList-listc">
                 <ul class="hj-playList-list">
-                    <li v-for="(val,index) in getMusicList" :class="{playing:getMusicPlace==index}" @click="">
+                    <li v-for="(val,index) in musicList" :class="{playing:getMusicPlace==index}" @click="">
                         <p @click.stop="selectMusic(index)">
                             {{val?val.name:你还没有添加列表}}
                         </p>
@@ -26,7 +26,7 @@
                 </ul>
             </div>
             <lyrics-box class="hj-playList-lyrics"
-                :music="getCurrentMusic" 
+                :music="currentMusic" 
                 :currentSecond="currentSecond">
                 
             </lyrics-box>
@@ -53,7 +53,7 @@
             LyricsBox,
         },
         computed: {
-            ...mapGetters(['isShowMusicList', 'getMusicList', 'getMusicPlace', 'getCurrentMusic', 'currentSecond']),
+            ...mapGetters(['isShowMusicList', 'musicList', 'getMusicPlace', 'currentMusic', 'currentSecond']),
 
         },
         methods:mapActions(['toggleMusicList','selectMusic','delSong'])//getters.js里有注释功能
@@ -65,7 +65,7 @@
         flex-direction: column;
         position: fixed;
         height:36vh;
-        bottom: 54px;
+        bottom: 51px;
         z-index: 2;
         width: 980px;
         overflow: auto;

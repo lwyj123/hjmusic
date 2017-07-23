@@ -9,7 +9,7 @@
                 <button id="playBar-nextBtn" @click="next()"></button>
             </li>
             <li class="hj-playBar-main">
-                <h1 class="songName">{{getCurrentMusic.name}}</h1>
+                <h1 class="songName">{{currentMusic.name}}</h1>
                 <div class="progress">
                     <div class="start-time">{{ currentTimeFormat }}</div>
                     <div @click="changeTime($event)" @touchmove="touchMove($event)" @touchend="touchEnd($event)" ref="progressBar" class="progress-bar">
@@ -91,9 +91,8 @@
         },
         computed: {
             ...mapGetters([
-                'getCurrentMusic',
-                'getPlayerDOM', 
-                'getMusicList',
+                'currentMusic',
+                'playerDOM', 
                 'currentSecond', 
                 'currentTimeFormat', 
                 'durationSecond',
@@ -109,7 +108,7 @@
         methods: {
             ...mapActions(['toggleMusicList', 'initSong','playSong', 'pauseSong']),
             play() {
-                if(Object.getOwnPropertyNames(this.getCurrentMusic).length == 1) {
+                if(Object.getOwnPropertyNames(this.currentMusic).length == 1) {
                     this.playbarState.isPlaying = true
                     this.$store.dispatch('initSong', this.nextSong);
                     this.$store.dispatch('playSong');
@@ -138,7 +137,7 @@
                 let progressBar = this.$refs.progressBar;
                 let coordStart = progressBar.getBoundingClientRect().left;
                 let coordEnd = event.pageX;
-                this.getPlayerDOM.currentTime = (coordEnd - coordStart) / progressBar.offsetWidth * this.durationSecond;
+                this.playerDOM.currentTime = (coordEnd - coordStart) / progressBar.offsetWidth * this.durationSecond;
                 this.$store.dispatch('playSong'); 
             },
         },

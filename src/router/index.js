@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/views/login'
 import Signup from '@/views/Signup'
-import Music from '@/views/Music'
 import Index from '@/views/Index'
 import Header from '@/components/Header'
 import Leftnav from '@/components/Leftnav'
@@ -60,7 +59,7 @@ const router = new Router({
         footer: MusicPlayer,
       },
       redirect: '/my/music',
-      name: '权限测试',
+      name: 'My',
       icon: 'quanxian',
       meta: { role: ['admin', 'user'] },
       hidden: true,

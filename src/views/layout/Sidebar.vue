@@ -13,12 +13,24 @@
       return {
         permission_routers: [
           {
-            path: '/permission',
-            redirect: '/permission/index',
-            name: '权限测试',
+            path: '',
+            name: 'Index',
             icon: 'quanxian',
-            meta: { role: ['admin'] },
-            noDropdown: false,
+            noDropdown: true,
+            children: [{ path: 'dashboard', name: 'index'}]
+          },
+          {
+            path: '/my',
+            name: 'My',
+            icon: 'quanxian',
+            noDropdown: true,
+            children: [
+              { 
+                path: 'music', 
+                name: 'my',
+                redirect: '/my/music/musician',
+              },
+            ]
           },
         ]
       }

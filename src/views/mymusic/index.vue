@@ -47,18 +47,19 @@
     },
     created() {
       
-    }
+    },
+    
   }
 </script>
 <style rel="stylesheet/scss" lang="scss">
   @import "src/styles/mixin.scss";
   .mymusic-container {
-    max-width: 880px;
+    max-width: 1280px;
     margin: auto;
-    height: calc(100vh - 101px);
+    padding-bottom: 100px;
+    min-height: calc(100vh - 101px);
     .el-row {
       .el-col.menu-container .el-menu {
-        padding-top: 40px;
       }
       .el-col.content-container > div {
         padding-top: 40px;
