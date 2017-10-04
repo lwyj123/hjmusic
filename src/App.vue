@@ -1,30 +1,33 @@
 <template>
   <div id="app">
-    hello wolrd
+    <m-header></m-header>
+    <tab></tab>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app',
-  components: {
+  import MHeader from 'components/m-header/m-header'
+  import Tab from 'components/tab/tab'
+  export default {
+    name: 'app',
+    components: {
+      MHeader,
+      Tab
+    },
+    data() {
+      return {
 
-  },
-  data() {
-    return {
-
+      }
+    },
+    methods: {
+    },
+    mounted() {
     }
-  },
-  methods: {
-  },
-  mounted() {
   }
-}
 </script>
 
 <style lang="scss">
-  @import '~common/style/index.scss'; // 全局自定义的css样式`
-  #app {
-    color: $color-theme;
-  }
 </style>
