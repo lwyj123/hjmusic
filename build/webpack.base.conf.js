@@ -3,10 +3,7 @@ var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 
-const ROOT_PATH = path.resolve(__dirname, '../');
-const APP_PATH = path.join(ROOT_PATH, 'src');
-
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
@@ -24,21 +21,24 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      'utils$': path.resolve(APP_PATH,'utils/index.js'),
       '@': resolve('src'),
-      'components': path.resolve(__dirname, '../src/components'),
-      'api': path.resolve(__dirname, '../src/api'),
-      'views': path.resolve(__dirname, '../src/views'),
-      'assets': path.resolve(__dirname, '../src/assets'),
-      'styles': path.resolve(__dirname, '../src/styles'),
-      'utils': path.resolve(__dirname, '../src/utils'),
-      'router': path.resolve(__dirname, '../src/router'),
-      'static': path.resolve(__dirname, '../static')
+      'common': resolve('src/common'),
+      'components': resolve('src/components'),
+      'base': resolve('src/base'),
+      'api': resolve('src/api')
     }
   },
   module: {
     rules: [
+      {
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        include: [resolve('src'), resolve('test')],
+        options: {
+          formatter: require('eslint-friendly-formatter')
+        }
+      },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
