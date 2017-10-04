@@ -5,6 +5,15 @@
     clear: both;
   }
 }
+@mixin bg-image($url) {
+  background-image: url($url);
+}
+@mixin no-wrap() {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 
 @mixin scrollBar {
   &::-webkit-scrollbar-track-piece {
